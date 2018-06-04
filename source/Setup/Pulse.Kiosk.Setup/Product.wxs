@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define Pulse.Kiosk_TargetDir=$(var.Pulse.Kiosk.TargetDir)?>
+  <?define Pulse.Setting_TargetDir=$(var.Pulse.Setting.TargetDir)?>
+  <Product Id="*" Name="Pulse.Kiosk" Language="1033" Version="1.0.0.0" Manufacturer="Tekcent" UpgradeCode="ec1814c8-9432-4ff6-8140-79f4c6239ae0">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <Icon Id="ProductIcon" SourceFile="$(var.Pulse.Setting_TargetDir)Images\fav.ico" />
+
+    <Feature Id="ProductFeature" Title="Pulse.Kiosk.Setup" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="Configurations_files" />
+      <ComponentGroupRef Id="Images_files" />
+      <ComponentGroupRef Id="Log4net_files" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="ApplicationShortcutDesktop" />
+      <ComponentGroupRef Id="Configurations_Tuancao_files" />
+      <ComponentGroupRef Id="Configurations_Vungo_files" />
+      <ComponentGroupRef Id="Configurations_Debug_files" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Pulse Setting">
+          <Directory Id="Configurations" Name="Configurations">
+            <Directory Id="Configurations_Release" Name="Release" />
+            <Directory Id="Configurations_Vungo" Name="Vungo" />
+            <Directory Id="Configurations_Tuancao" Name="Tuancao" />
+            <Directory Id="Configurations_Debug" Name="Debug" />
+          </Directory>
+          <Directory Id="Images" Name="Images" />
+          <Directory Id="Log4Net" Name="Log4Net" />
+        </Directory>
+      </Directory>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Pulse Setting" />
+      </Directory>
+
+      <Directory Id="DesktopFolder" Name="Desktop"></Directory>
+    </Directory>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="38906a1d-cd6d-4e49-80ad-300e8a339ec3">
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="Pulse Setting" Description="TEKCENT" Target="[#Pulse.Setting.exe]" WorkingDirectory="INSTALLFOLDER" Icon="ProductIcon" />
+        <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\Pulse.Setting.exe" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="38906a1d-cd6d-4e49-80ad-300e8a339ec4">
+        <Shortcut Id="ApplicationDesktopShortcut" Name="Pulse Setting" Description="TEKCENT" Target="[#Pulse.Setting.exe]" WorkingDirectory="INSTALLFOLDER" Icon="ProductIcon" />
+        <RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Tekcent" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <!-- <Component Id="ProductComponent"> -->
+      <!-- TODO: Insert files, registry keys, and other resources here. -->
+      <!-- </Component> -->
+      <Component Id="AutoMapper.dll" Guid="f722ac07-f051-4d10-9fd2-1878fbc4e148">
+        <File Id="AutoMapper.dll" Name="AutoMapper.dll" Source="$(var.Pulse.Kiosk_TargetDir)AutoMapper.dll" />
+      </Component>
+      <Component Id="EntityFramework.dll" Guid="4573dbf1-0f45-4c57-b3fa-c2da89acf10c">
+        <File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="$(var.Pulse.Kiosk_TargetDir)EntityFramework.dll" />
+      </Component>
+      <Component Id="EntityFramework.SqlServer.dll" Guid="e2bd5480-3eca-432a-a35e-f62e62e00216">
+        <File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="$(var.Pulse.Kiosk_TargetDir)EntityFramework.SqlServer.dll" />
+      </Component>
+      <Component Id="log4net.dll" Guid="1062ec9a-5bbb-4886-9411-d963b1191abb">
+        <File Id="log4net.dll" Name="log4net.dll" Source="$(var.Pulse.Kiosk_TargetDir)log4net.dll" />
+      </Component>
+      <Component Id="System.Web.Cors.dll" Guid="dd07a543-8fec-4864-a1ed-f0975a80b5c8">
+        <File Id="System.Web.Cors.dll" Name="System.Web.Cors.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.Cors.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.Identity.Core.dll" Guid="d4339055-3afd-43a6-a6b0-25a57022804e">
+        <File Id="Microsoft.AspNet.Identity.Core.dll" Name="Microsoft.AspNet.Identity.Core.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.AspNet.Identity.Core.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.Identity.EntityFramework.dll" Guid="61a4e5a6-96f2-4611-b3ac-9dd789a39e31">
+        <File Id="Microsoft.AspNet.Identity.EntityFramework.dll" Name="Microsoft.AspNet.Identity.EntityFramework.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.AspNet.Identity.EntityFramework.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.Identity.Owin.dll" Guid="1cf0ee72-a164-4f8c-a2ad-ea6d3f9d2aaf">
+        <File Id="Microsoft.AspNet.Identity.Owin.dll" Name="Microsoft.AspNet.Identity.Owin.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.AspNet.Identity.Owin.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.SignalR.Client.dll" Guid="f3fbfd6f-9e2c-4a1c-a7ca-a6f9f8e722b7">
+        <File Id="Microsoft.AspNet.SignalR.Client.dll" Name="Microsoft.AspNet.SignalR.Client.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.AspNet.SignalR.Client.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.SignalR.Core.dll" Guid="42342fb2-b41b-4b65-85b7-7b2ecc88eb20">
+        <File Id="Microsoft.AspNet.SignalR.Core.dll" Name="Microsoft.AspNet.SignalR.Core.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.AspNet.SignalR.Core.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.SignalR.SystemWeb.dll" Guid="e8406fe2-687a-4294-928e-11354d0be0c8">
+        <File Id="Microsoft.AspNet.SignalR.SystemWeb.dll" Name="Microsoft.AspNet.SignalR.SystemWeb.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.AspNet.SignalR.SystemWeb.dll" />
+      </Component>
+      <Component Id="System.Net.Http.Formatting.dll" Guid="b8b77142-d7fa-464c-a36a-df612e9987d8">
+        <File Id="System.Net.Http.Formatting.dll" Name="System.Net.Http.Formatting.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Net.Http.Formatting.dll" />
+      </Component>
+      <Component Id="System.Web.Http.dll" Guid="b2e38aa4-30c1-49e6-a7fe-e8cf37afe2ad">
+        <File Id="System.Web.Http.dll" Name="System.Web.Http.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.Http.dll" />
+      </Component>
+      <Component Id="System.Web.Http.Cors.dll" Guid="4c662617-be1e-4a2d-a302-e2fc97f521f5">
+        <File Id="System.Web.Http.Cors.dll" Name="System.Web.Http.Cors.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.Http.Cors.dll" />
+      </Component>
+      <Component Id="System.Web.Http.Owin.dll" Guid="d0139ab1-3a45-4071-8e5a-7c9df7dc59c1">
+        <File Id="System.Web.Http.Owin.dll" Name="System.Web.Http.Owin.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.Http.Owin.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.dll" Guid="1d8c181e-b2a7-4fd6-8aa7-3cc59d3bf110">
+        <File Id="Microsoft.Owin.dll" Name="Microsoft.Owin.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Cors.dll" Guid="5c300ac0-500e-4eec-b55c-a79eeaf17557">
+        <File Id="Microsoft.Owin.Cors.dll" Name="Microsoft.Owin.Cors.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Cors.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Diagnostics.dll" Guid="6f199073-f410-4055-bf96-e3eeebde7d51">
+        <File Id="Microsoft.Owin.Diagnostics.dll" Name="Microsoft.Owin.Diagnostics.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Diagnostics.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Host.HttpListener.dll" Guid="4ebc2686-3801-460b-9cd1-7bf6ffb5d7dd">
+        <File Id="Microsoft.Owin.Host.HttpListener.dll" Name="Microsoft.Owin.Host.HttpListener.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Host.HttpListener.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Host.SystemWeb.dll" Guid="12472601-7f79-4c2e-bff3-7e77d20a3a84">
+        <File Id="Microsoft.Owin.Host.SystemWeb.dll" Name="Microsoft.Owin.Host.SystemWeb.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Host.SystemWeb.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Hosting.dll" Guid="61ad500a-6470-41b2-b931-867c38e762bd">
+        <File Id="Microsoft.Owin.Hosting.dll" Name="Microsoft.Owin.Hosting.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Hosting.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Security.dll" Guid="423b5ce0-2b26-4864-9902-f4782130112c">
+        <File Id="Microsoft.Owin.Security.dll" Name="Microsoft.Owin.Security.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Security.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Security.Cookies.dll" Guid="71fd82c9-0c66-4688-a95a-7e434986a92a">
+        <File Id="Microsoft.Owin.Security.Cookies.dll" Name="Microsoft.Owin.Security.Cookies.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Security.Cookies.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Security.OAuth.dll" Guid="dba97431-bbff-41a1-ac47-733718cd74c2">
+        <File Id="Microsoft.Owin.Security.OAuth.dll" Name="Microsoft.Owin.Security.OAuth.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Owin.Security.OAuth.dll" />
+      </Component>
+      <Component Id="Microsoft.Web.Infrastructure.dll" Guid="ab860095-9117-4df7-af41-d3479655edae">
+        <File Id="Microsoft.Web.Infrastructure.dll" Name="Microsoft.Web.Infrastructure.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Web.Infrastructure.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="722b06a8-f03b-4c16-b282-635373d0fd43">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.Pulse.Kiosk_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="Ninject.dll" Guid="8b832346-5f19-4108-beac-d32714a59968">
+        <File Id="Ninject.dll" Name="Ninject.dll" Source="$(var.Pulse.Kiosk_TargetDir)Ninject.dll" />
+      </Component>
+      <Component Id="Ninject.Web.Common.dll" Guid="365d9b37-7a53-4b08-b582-9d8f5191c0e8">
+        <File Id="Ninject.Web.Common.dll" Name="Ninject.Web.Common.dll" Source="$(var.Pulse.Kiosk_TargetDir)Ninject.Web.Common.dll" />
+      </Component>
+      <Component Id="Owin.dll" Guid="5d29f95a-02e7-4a83-b8dd-0e465e9dbdee">
+        <File Id="Owin.dll" Name="Owin.dll" Source="$(var.Pulse.Kiosk_TargetDir)Owin.dll" />
+      </Component>
+      <Component Id="WebActivatorEx.dll" Guid="49e10ef9-8c72-4018-a84d-78673c479940">
+        <File Id="WebActivatorEx.dll" Name="WebActivatorEx.dll" Source="$(var.Pulse.Kiosk_TargetDir)WebActivatorEx.dll" />
+      </Component>
+      <Component Id="Pulse.Common.dll" Guid="624fd14a-6cce-4984-a6e4-bcbec6398de7">
+        <File Id="Pulse.Common.dll" Name="Pulse.Common.dll" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Common.dll" />
+      </Component>
+      <Component Id="Pulse.Core.dll" Guid="f11c16a5-b5b6-47dd-a563-42dd773ae1cd">
+        <File Id="Pulse.Core.dll" Name="Pulse.Core.dll" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Core.dll" />
+      </Component>
+      <Component Id="Pulse.Domain.dll" Guid="cb15df5b-b517-4c9c-9b33-f352e9bf28a1">
+        <File Id="Pulse.Domain.dll" Name="Pulse.Domain.dll" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Domain.dll" />
+      </Component>
+      <Component Id="Pulse.Kiosk.exe" Guid="350d98f4-6259-416e-a4ed-2fb4283a9786">
+        <File Id="Pulse.Kiosk.exe" Name="Pulse.Kiosk.exe" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Kiosk.exe" KeyPath="yes" Vital="yes" />
+        <ServiceInstall Id="KioskServiceInstaller" Start="auto" Type="ownProcess" Vital="yes" Name="KioskService" DisplayName="Pulse Kiosk Service" Description="Pulse Kiosk Service" Account="LocalSystem" ErrorControl="ignore" Interactive="no" />
+        <ServiceControl Id="KioskServiceStartService" Stop="both" Remove="uninstall" Name="KioskService" Wait="no" />
+      </Component>
+      <Component Id="Pulse.Kiosk.exe.config" Guid="8ab6d2d9-1c0e-42a1-a39d-16895ac20f80">
+        <File Id="Pulse.Kiosk.exe.config" Name="Pulse.Kiosk.exe.config" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Kiosk.exe.config" />
+      </Component>
+      <Component Id="Pulse.Setting.exe" Guid="9dfeb5a6-7a36-41fc-a854-cb3b8c056735">
+        <File Id="Pulse.Setting.exe" Name="Pulse.Setting.exe" Source="$(var.Pulse.Setting_TargetDir)Pulse.Setting.exe" />
+      </Component>
+      <Component Id="Pulse.Setting.exe.config" Guid="45c2eb44-43a0-4fb1-ace0-03046fca1b99">
+        <File Id="Pulse.Setting.exe.config" Name="Pulse.Setting.exe.config" Source="$(var.Pulse.Setting_TargetDir)Pulse.Setting.exe.config" />
+      </Component>
+      <Component Id="FluentValidation.dll" Guid="f0280901-dd0b-4dc0-98a2-d75331c939ff">
+        <File Id="FluentValidation.dll" Name="FluentValidation.dll" Source="$(var.Pulse.Kiosk_TargetDir)FluentValidation.dll" />
+      </Component>
+      <Component Id="FluentValidation.Mvc.dll" Guid="4ce0d7b7-dbcb-4f8f-816c-0cbcf5de587a">
+        <File Id="FluentValidation.Mvc.dll" Name="FluentValidation.Mvc.dll" Source="$(var.Pulse.Kiosk_TargetDir)FluentValidation.Mvc.dll" />
+      </Component>
+      <Component Id="System.Web.Mvc.dll" Guid="750e467c-79dc-4df5-b978-98564bbedfbc">
+        <File Id="System.Web.Mvc.dll" Name="System.Web.Mvc.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.Mvc.dll" />
+      </Component>
+      <Component Id="System.Web.Razor.dll" Guid="fba9af5a-0da7-4c46-8daa-202f27efe03e">
+        <File Id="System.Web.Razor.dll" Name="System.Web.Razor.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.Razor.dll" />
+      </Component>
+      <Component Id="System.Web.Helpers.dll" Guid="07dfc897-d6f3-4f02-8694-cb8244388e9b">
+        <File Id="System.Web.Helpers.dll" Name="System.Web.Helpers.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.Helpers.dll" />
+      </Component>
+      <Component Id="System.Web.WebPages.dll" Guid="f6e8afe0-1803-43af-bbd3-cdb8d9e556f2">
+        <File Id="System.Web.WebPages.dll" Name="System.Web.WebPages.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.WebPages.dll" />
+      </Component>
+      <Component Id="System.Web.WebPages.Razor.dll" Guid="3bfa2046-66eb-4c1a-ab8d-bf4823b16ed4">
+        <File Id="System.Web.WebPages.Razor.dll" Name="System.Web.WebPages.Razor.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.WebPages.Razor.dll" />
+      </Component>
+      <Component Id="System.Web.WebPages.Deployment.dll" Guid="be59d51f-5c2c-43ae-9c0b-77430d8a4e96">
+        <File Id="System.Web.WebPages.Deployment.dll" Name="System.Web.WebPages.Deployment.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Web.WebPages.Deployment.dll" />
+      </Component>
+      <!--<Component Id="Castle.Core.dll" Guid="e4883662-0e79-4d4a-8ed1-554b1f587317">
+        <File Id="Castle.Core.dll" Name="Castle.Core.dll" Source="$(var.Pulse.Kiosk_TargetDir)Castle.Core.dll" />
+      </Component>-->
+      <Component Id="Pulse.Mongo.pdb" Guid="660bf761-ac13-4c89-972a-68e7bc06c22c">
+        <File Id="Pulse.Mongo.pdb" Name="Pulse.Mongo.pdb" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Mongo.pdb" />
+      </Component>
+      <Component Id="Pulse.Mongo.dll" Guid="b7001e91-81ac-4465-9457-5f1e45c0e21b">
+        <File Id="Pulse.Mongo.dll" Name="Pulse.Mongo.dll" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Mongo.dll" />
+      </Component>
+      <Component Id="Pulse.Kiosk.pdb" Guid="85916759-7844-4c7b-a036-2bb9a532c49b">
+        <File Id="Pulse.Kiosk.pdb" Name="Pulse.Kiosk.pdb" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Kiosk.pdb" />
+      </Component>
+      <Component Id="Pulse.Domain.pdb" Guid="0ee82fb7-f725-433e-8645-b136fb34e0e0">
+        <File Id="Pulse.Domain.pdb" Name="Pulse.Domain.pdb" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Domain.pdb" />
+      </Component>
+      <Component Id="Pulse.Core.pdb" Guid="631f1d67-2a1a-4244-a724-b12aedf82582">
+        <File Id="Pulse.Core.pdb" Name="Pulse.Core.pdb" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Core.pdb" />
+      </Component>
+      <Component Id="Pulse.Common.pdb" Guid="686f24e3-0647-4bfc-a93a-1a6b02210b1d">
+        <File Id="Pulse.Common.pdb" Name="Pulse.Common.pdb" Source="$(var.Pulse.Kiosk_TargetDir)Pulse.Common.pdb" />
+      </Component>
+      <Component Id="System.Runtime.InteropServices.RuntimeInformation.dll" Guid="4d23f0c2-b3c0-4874-a300-d78551eff541">
+        <File Id="System.Runtime.InteropServices.RuntimeInformation.dll" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="$(var.Pulse.Kiosk_TargetDir)System.Runtime.InteropServices.RuntimeInformation.dll" />
+      </Component>
+      <Component Id="RazorEngine.dll" Guid="62840bfb-e0a9-4ece-914d-2389322418f5">
+        <File Id="RazorEngine.dll" Name="RazorEngine.dll" Source="$(var.Pulse.Kiosk_TargetDir)RazorEngine.dll" />
+      </Component>
+      <Component Id="MongoDB.Driver.Core.dll" Guid="411a91b0-8628-4f88-b514-225b854a9afe">
+        <File Id="MongoDB.Driver.Core.dll" Name="MongoDB.Driver.Core.dll" Source="$(var.Pulse.Kiosk_TargetDir)MongoDB.Driver.Core.dll" />
+      </Component>
+      <Component Id="MongoDB.Driver.dll" Guid="cd7c1edb-ced0-4d23-9ff7-f82e3e26bdb3">
+        <File Id="MongoDB.Driver.dll" Name="MongoDB.Driver.dll" Source="$(var.Pulse.Kiosk_TargetDir)MongoDB.Driver.dll" />
+      </Component>
+      <Component Id="MongoDB.Bson.dll" Guid="45109cf1-519c-4f85-8a79-3e62629727c4">
+        <File Id="MongoDB.Bson.dll" Name="MongoDB.Bson.dll" Source="$(var.Pulse.Kiosk_TargetDir)MongoDB.Bson.dll" />
+      </Component>
+      <Component Id="Guards.dll" Guid="40921877-c1a0-42fe-9480-439a060d4b80">
+        <File Id="Guards.dll" Name="Guards.dll" Source="$(var.Pulse.Kiosk_TargetDir)Guards.dll" />
+      </Component>
+      <Component Id="Pulse.Setting.pdb" Guid="8399e446-07d3-4de2-a803-bdc95beb3ea9">
+        <File Id="Pulse.Setting.pdb" Name="Pulse.Setting.pdb" Source="$(var.Pulse.Setting_TargetDir)Pulse.Setting.pdb" />
+      </Component>
+      <Component Id="Microsoft.Practices.ServiceLocation.dll" Guid="178f566b-068e-49ba-ad6f-83122336996f">
+        <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.Pulse.Kiosk_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
+      </Component>
+      <Component Id="PlatformAdapter.dll" Guid="15445cc3-d7d4-4046-b61d-acb29377cf3c">
+        <File Id="PlatformAdapter.dll" Name="PlatformAdapter.dll" Source="$(var.Pulse.Kiosk_TargetDir)PlatformAdapter.dll" />
+      </Component>
+      <Component Id="CrossPlatformLibrary.dll" Guid="f73684a1-6c1d-406a-b1c5-48d4fc442cae">
+        <File Id="CrossPlatformLibrary.dll" Name="CrossPlatformLibrary.dll" Source="$(var.Pulse.Kiosk_TargetDir)CrossPlatformLibrary.dll" />
+      </Component>
+      <Component Id="CrossPlatformLibrary.Platform.dll" Guid="5ee69dcf-5ff8-4340-97dc-b8ffb136a034">
+        <File Id="CrossPlatformLibrary.Platform.dll" Name="CrossPlatformLibrary.Platform.dll" Source="$(var.Pulse.Kiosk_TargetDir)CrossPlatformLibrary.Platform.dll" />
+      </Component>
+      <Component Id="Zlib.Portable.dll" Guid="408f2c52-7da6-403c-aff1-e25f9bae5f06">
+        <File Id="Zlib.Portable.dll" Name="Zlib.Portable.dll" Source="$(var.Pulse.Kiosk_TargetDir)Zlib.Portable.dll" />
+      </Component>
+      <Component Id="Castle.Core.dll" Guid="be560a1d-307a-4a30-adf2-c9bbe890663f">
+        <File Id="Castle.Core.dll" Name="Castle.Core.dll" Source="$(var.Pulse.Kiosk_TargetDir)Castle.Core.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Configurations_files" Directory="Configurations">
+      <Component Id="Configurations_KioskSecurity.xml" Guid="9182b1cb-1265-4116-a873-cb060bb2be08">
+        <File Id="Configurations_KioskSecurity.xml" Name="KioskSecurity.xml" Source="$(var.Pulse.Kiosk_TargetDir)Configurations\KioskSecurity.xml" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Images_files" Directory="Images">
+      <Component Id="Images_fav.ico" Guid="3519e724-4622-4c64-9d39-4406938b97f9">
+        <File Id="Images_fav.ico" Name="fav.ico" Source="$(var.Pulse.Setting_TargetDir)Images\fav.ico" />
+      </Component>
+      <Component Id="Images_logo.png" Guid="9b891bcb-9eb9-4563-9d7c-2357ea7ed6fd">
+        <File Id="Images_logo.png" Name="logo.png" Source="$(var.Pulse.Setting_TargetDir)Images\logo.png" />
+      </Component>
+      <Component Id="Images_text_logo.png" Guid="ec6c0446-bd23-4b0b-abe5-b2ce0cb9d018">
+        <File Id="Images_text_logo.png" Name="text-logo.png" Source="$(var.Pulse.Setting_TargetDir)Images\text-logo.png" />
+      </Component>
+      <Component Id="Images_pulse.png" Guid="be650dad-9e85-4e68-a886-378f05f5cbe8">
+        <File Id="Images_pulse.png" Name="pulse.png" Source="$(var.Pulse.Setting_TargetDir)Images\pulse.png" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Log4net_files" Directory="Log4Net">
+      <Component Id="Log4net_files.config" Guid="865ef390-f26b-11e6-bc64-92361f002671">
+        <File Id="Log4net_files.config" Name="Log4net.config" Source="$(var.Pulse.Kiosk_TargetDir)Log4net\Log4Net.config" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Configurations_Tuancao_files" Directory="Configurations_Tuancao">
+      <Component Id="Configurations_Tuancao_KioskSecurity.xml" Guid="a470bddb-b764-46e0-b023-3ad9c4295baf">
+        <File Id="Configurations_Tuancao_KioskSecurity.xml" Name="KioskSecurity.xml" Source="$(var.Pulse.Kiosk_TargetDir)Configurations\KioskSecurity.xml" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Configurations_Vungo_files" Directory="Configurations_Vungo">
+      <Component Id="Configurations_Vungo_KioskSecurity.xml" Guid="9749e952-3572-4b1b-9583-f941ee02391a">
+        <File Id="Configurations_Vungo_KioskSecurity.xml" Name="KioskSecurity.xml" Source="$(var.Pulse.Kiosk_TargetDir)Configurations\KioskSecurity.xml" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Configurations_Debug_files" Directory="Configurations_Debug">
+      <Component Id="Configurations_Debug_KioskSecurity.xml" Guid="4e176e8b-82ac-4b06-8515-306fa334c46d">
+        <File Id="Configurations_Debug_KioskSecurity.xml" Name="KioskSecurity.xml" Source="$(var.Pulse.Kiosk_TargetDir)Configurations\KioskSecurity.xml" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

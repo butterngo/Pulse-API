@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DeployedProjects>
+    <string>Pulse.Kiosk\Pulse.Kiosk.csproj</string>
+    <string>Setup\Pulse.Setting\Pulse.Setting.csproj</string>
+  </DeployedProjects>
+  <DirectoryMappings>
+    <Item Key="" Value="INSTALLFOLDER" />
+  </DirectoryMappings>
+  <FileMappings>
+    <Item Key="Configurations\Release\KioskSecurity.xml" Value="Configurations_KioskSecurity.xml" />
+  </FileMappings>
+  <DeploySymbols>true</DeploySymbols>
+</Configuration>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define Pulse.WebApi_TargetDir=$(var.Pulse.WebApi.TargetDir)?>
+  <Product Id="*" Name="Pulse.WebApi" Language="1033" Version="1.0.0.0" Manufacturer="Tekcent" UpgradeCode="ecf82999-2cab-4a08-82f5-47be0908eeb8">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="Pulse WebApi" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="Log4net_files" />
+      <ComponentGroupRef Id="EmailTemplate_files" />
+    </Feature>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Pulse.WebApi">
+          <Directory Id="Log4Net" Name="Log4Net" />
+          <Directory Id="EmailTemplate" Name="EmailTemplate" />
+        </Directory>
+      </Directory>
+    </Directory>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="AutoMapper.dll" Guid="5a811c73-0df1-4e2b-bbae-3ddd452f975a">
+        <File Id="AutoMapper.dll" Name="AutoMapper.dll" Source="$(var.Pulse.WebApi_TargetDir)AutoMapper.dll" />
+      </Component>
+      <Component Id="EntityFramework.dll" Guid="ac45d766-fb13-4419-a81a-f15f3748150b">
+        <File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="$(var.Pulse.WebApi_TargetDir)EntityFramework.dll" />
+      </Component>
+      <Component Id="EntityFramework.SqlServer.dll" Guid="917688cc-1651-4b9b-8cf4-1fd780e5ca5a">
+        <File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="$(var.Pulse.WebApi_TargetDir)EntityFramework.SqlServer.dll" />
+      </Component>
+      <Component Id="System.Web.Cors.dll" Guid="c00ed6e8-7418-4c1b-9cf0-eb56f568b786">
+        <File Id="System.Web.Cors.dll" Name="System.Web.Cors.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Cors.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.Identity.Core.dll" Guid="60ee2a2a-74c0-4b74-9f83-695e4580b833">
+        <File Id="Microsoft.AspNet.Identity.Core.dll" Name="Microsoft.AspNet.Identity.Core.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.AspNet.Identity.Core.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.Identity.EntityFramework.dll" Guid="9e19c4e3-c9b7-441e-a436-e9265ddcf93e">
+        <File Id="Microsoft.AspNet.Identity.EntityFramework.dll" Name="Microsoft.AspNet.Identity.EntityFramework.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.AspNet.Identity.EntityFramework.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.Identity.Owin.dll" Guid="27c04844-dc53-4de5-967c-57bcecf869b9">
+        <File Id="Microsoft.AspNet.Identity.Owin.dll" Name="Microsoft.AspNet.Identity.Owin.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.AspNet.Identity.Owin.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.SignalR.Client.dll" Guid="4262e950-9fe3-43d8-b00e-50e2e360d1c6">
+        <File Id="Microsoft.AspNet.SignalR.Client.dll" Name="Microsoft.AspNet.SignalR.Client.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.AspNet.SignalR.Client.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.SignalR.Core.dll" Guid="9040a606-426b-476a-a50a-72f6f8ba3777">
+        <File Id="Microsoft.AspNet.SignalR.Core.dll" Name="Microsoft.AspNet.SignalR.Core.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.AspNet.SignalR.Core.dll" />
+      </Component>
+      <!--<Component Id="Microsoft.AspNet.SignalR.SystemWeb.dll" Guid="c3d1304f-0fab-4117-a38b-2ca0579051f6">
+        <File Id="Microsoft.AspNet.SignalR.SystemWeb.dll" Name="Microsoft.AspNet.SignalR.SystemWeb.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.AspNet.SignalR.SystemWeb.dll" />
+      </Component>-->
+      <Component Id="System.Net.Http.Formatting.dll" Guid="3bb6afaf-475b-475b-a2e0-23f49f49478f">
+        <File Id="System.Net.Http.Formatting.dll" Name="System.Net.Http.Formatting.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Net.Http.Formatting.dll" />
+      </Component>
+      <Component Id="System.Web.Http.dll" Guid="92b78ea3-c761-4ef6-b9d4-73becfea2240">
+        <File Id="System.Web.Http.dll" Name="System.Web.Http.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Http.dll" />
+      </Component>
+      <Component Id="System.Web.Http.Cors.dll" Guid="f9a5a17b-52d4-42de-93bc-93d85e160001">
+        <File Id="System.Web.Http.Cors.dll" Name="System.Web.Http.Cors.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Http.Cors.dll" />
+      </Component>
+      <Component Id="System.Web.Http.Owin.dll" Guid="103014c2-0de3-49c0-aec3-770471269d59">
+        <File Id="System.Web.Http.Owin.dll" Name="System.Web.Http.Owin.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Http.Owin.dll" />
+      </Component>
+      <Component Id="System.Web.Http.SelfHost.dll" Guid="ba5889f9-d260-4161-ae01-f221369aec4e">
+        <File Id="System.Web.Http.SelfHost.dll" Name="System.Web.Http.SelfHost.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Http.SelfHost.dll" />
+      </Component>
+      <Component Id="System.Web.Http.WebHost.dll" Guid="fb2934c8-f727-4d01-b68f-ffd7d4bb7424">
+        <File Id="System.Web.Http.WebHost.dll" Name="System.Web.Http.WebHost.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Http.WebHost.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Cors.dll" Guid="0e2c6db1-3f67-46ea-be66-529c6b9bf2af">
+        <File Id="Microsoft.Owin.Cors.dll" Name="Microsoft.Owin.Cors.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Cors.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.dll" Guid="081de125-b16f-423a-96ca-09f27441264f">
+        <File Id="Microsoft.Owin.dll" Name="Microsoft.Owin.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Diagnostics.dll" Guid="82ec5d16-97b3-4f67-b783-a3edcc8ec66a">
+        <File Id="Microsoft.Owin.Diagnostics.dll" Name="Microsoft.Owin.Diagnostics.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Diagnostics.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Host.HttpListener.dll" Guid="27d66187-a1af-4879-b8a4-46f78d9cc10b">
+        <File Id="Microsoft.Owin.Host.HttpListener.dll" Name="Microsoft.Owin.Host.HttpListener.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Host.HttpListener.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Host.SystemWeb.dll" Guid="846740c6-7153-4cb9-a49c-644ed6390a8f">
+        <File Id="Microsoft.Owin.Host.SystemWeb.dll" Name="Microsoft.Owin.Host.SystemWeb.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Host.SystemWeb.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Hosting.dll" Guid="6cb23ccf-7ac2-4e70-a6cf-57118791afbc">
+        <File Id="Microsoft.Owin.Hosting.dll" Name="Microsoft.Owin.Hosting.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Hosting.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Security.dll" Guid="a248d164-0112-4495-b3a9-dac8caa1baac">
+        <File Id="Microsoft.Owin.Security.dll" Name="Microsoft.Owin.Security.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Security.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Security.Cookies.dll" Guid="bc721d84-0a8a-41bc-9701-1454dbf4e364">
+        <File Id="Microsoft.Owin.Security.Cookies.dll" Name="Microsoft.Owin.Security.Cookies.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Security.Cookies.dll" />
+      </Component>
+      <Component Id="Microsoft.Owin.Security.OAuth.dll" Guid="24138e1c-0d83-418e-ac28-05b7308e1f5c">
+        <File Id="Microsoft.Owin.Security.OAuth.dll" Name="Microsoft.Owin.Security.OAuth.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Owin.Security.OAuth.dll" />
+      </Component>
+      <Component Id="Microsoft.Web.Infrastructure.dll" Guid="edaeb401-a541-462f-a564-97c8aa8d219e">
+        <File Id="Microsoft.Web.Infrastructure.dll" Name="Microsoft.Web.Infrastructure.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Web.Infrastructure.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="c8896d69-35c8-44a5-b13d-2e62e0928c70">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.Pulse.WebApi_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="Ninject.dll" Guid="70faffbb-eee6-4583-9aa7-c47d70055a39">
+        <File Id="Ninject.dll" Name="Ninject.dll" Source="$(var.Pulse.WebApi_TargetDir)Ninject.dll" />
+      </Component>
+      <Component Id="Ninject.Extensions.ContextPreservation.dll" Guid="461fcecc-76b1-40f8-8a4c-bec4b7e4e687">
+        <File Id="Ninject.Extensions.ContextPreservation.dll" Name="Ninject.Extensions.ContextPreservation.dll" Source="$(var.Pulse.WebApi_TargetDir)Ninject.Extensions.ContextPreservation.dll" />
+      </Component>
+      <Component Id="Ninject.Extensions.NamedScope.dll" Guid="f8d256bb-307e-46e3-bab5-08d29f829bd1">
+        <File Id="Ninject.Extensions.NamedScope.dll" Name="Ninject.Extensions.NamedScope.dll" Source="$(var.Pulse.WebApi_TargetDir)Ninject.Extensions.NamedScope.dll" />
+      </Component>
+      <Component Id="Ninject.Web.Common.dll" Guid="15cdcac9-944d-4be7-82ba-fc1df1cbe2c8">
+        <File Id="Ninject.Web.Common.dll" Name="Ninject.Web.Common.dll" Source="$(var.Pulse.WebApi_TargetDir)Ninject.Web.Common.dll" />
+      </Component>
+      <Component Id="Ninject.Web.Common.OwinHost.dll" Guid="00fce3ea-9f56-4083-ba73-2219741e71e1">
+        <File Id="Ninject.Web.Common.OwinHost.dll" Name="Ninject.Web.Common.OwinHost.dll" Source="$(var.Pulse.WebApi_TargetDir)Ninject.Web.Common.OwinHost.dll" />
+      </Component>
+      <Component Id="Ninject.Web.WebApi.dll" Guid="a09930db-f2cf-4a92-8546-39d8e51748d4">
+        <File Id="Ninject.Web.WebApi.dll" Name="Ninject.Web.WebApi.dll" Source="$(var.Pulse.WebApi_TargetDir)Ninject.Web.WebApi.dll" />
+      </Component>
+      <Component Id="Ninject.Web.WebApi.OwinHost.dll" Guid="bb88274e-7dd0-4d29-b169-f5bdd3ded598">
+        <File Id="Ninject.Web.WebApi.OwinHost.dll" Name="Ninject.Web.WebApi.OwinHost.dll" Source="$(var.Pulse.WebApi_TargetDir)Ninject.Web.WebApi.OwinHost.dll" />
+      </Component>
+      <Component Id="Owin.dll" Guid="4db6e1fa-9929-4393-a321-74112d4da48e">
+        <File Id="Owin.dll" Name="Owin.dll" Source="$(var.Pulse.WebApi_TargetDir)Owin.dll" />
+      </Component>
+      <Component Id="WebActivatorEx.dll" Guid="fac5fe2e-ee36-4882-8765-71029dde692f">
+        <File Id="WebActivatorEx.dll" Name="WebActivatorEx.dll" Source="$(var.Pulse.WebApi_TargetDir)WebActivatorEx.dll" />
+      </Component>
+      <Component Id="Pulse.Core.dll" Guid="bf349410-0fd8-4290-8ac4-bea5a86edd1f">
+        <File Id="Pulse.Core.dll" Name="Pulse.Core.dll" Source="$(var.Pulse.WebApi_TargetDir)Pulse.Core.dll" />
+      </Component>
+      <Component Id="Pulse.Domain.dll" Guid="ed2b5d69-52a6-4236-a96a-aa4426aa16f3">
+        <File Id="Pulse.Domain.dll" Name="Pulse.Domain.dll" Source="$(var.Pulse.WebApi_TargetDir)Pulse.Domain.dll" />
+      </Component>
+      <Component Id="Pulse.WebApi.exe" Guid="35697865-ce7d-4518-abb2-2cc0ff359df1">
+        <File Id="Pulse.WebApi.exe" Name="Pulse.WebApi.exe" Source="$(var.Pulse.WebApi_TargetDir)Pulse.WebApi.exe" KeyPath="yes" Vital="yes" />
+        <ServiceInstall Id="ApiServiceInstaller" Type="ownProcess" Vital="yes" Name="ServiceApi" DisplayName="Pulse Web Api" Description="This service to handle pulse's api" Start="auto" Account="LocalSystem" ErrorControl="ignore" Interactive="no" />
+        <ServiceControl Id="ApiStartService" Stop="both" Remove="uninstall" Name="ServiceApi" Wait="no" />
+      </Component>
+      <Component Id="Pulse.WebApi.exe.config" Guid="2a743351-2c4f-4cc4-8af0-64ac69c0e50f">
+        <File Id="Pulse.WebApi.exe.config" Name="Pulse.WebApi.exe.config" Source="$(var.Pulse.WebApi_TargetDir)Pulse.WebApi.exe.config" />
+      </Component>
+      <Component Id="Pulse.Common.dll" Guid="e42df2dd-513e-4734-b76d-f878e20f06df">
+        <File Id="Pulse.Common.dll" Name="Pulse.Common.dll" Source="$(var.Pulse.WebApi_TargetDir)Pulse.Common.dll" />
+      </Component>
+      <Component Id="Microsoft.AspNet.SignalR.SystemWeb.dll" Guid="3c0ede8a-feb6-4a24-94e5-91dbd9677df5">
+        <File Id="Microsoft.AspNet.SignalR.SystemWeb.dll" Name="Microsoft.AspNet.SignalR.SystemWeb.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.AspNet.SignalR.SystemWeb.dll" />
+      </Component>
+      <Component Id="log4net.dll" Guid="a2090672-ed5f-46d2-837e-7805406fc6ec">
+        <File Id="log4net.dll" Name="log4net.dll" Source="$(var.Pulse.WebApi_TargetDir)log4net.dll" />
+      </Component>
+    <Component Id="System.Web.Mvc.dll" Guid="621e194b-a79a-4d40-8d50-e3f097e17bae"><File Id="System.Web.Mvc.dll" Name="System.Web.Mvc.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Mvc.dll" /></Component><Component Id="System.Web.Razor.dll" Guid="7a182c22-4bd0-4b2d-9861-0761b2da657e"><File Id="System.Web.Razor.dll" Name="System.Web.Razor.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Razor.dll" /></Component>
+      <Component Id="FluentValidation.dll" Guid="41b3abd6-69a2-437b-9b49-5b5610784cbe">
+        <File Id="FluentValidation.dll" Name="FluentValidation.dll" Source="$(var.Pulse.WebApi_TargetDir)FluentValidation.dll" />
+      </Component>
+      <Component Id="FluentValidation.Mvc.dll" Guid="ac285f2a-d2d4-4575-902f-9972d4352fe6">
+        <File Id="FluentValidation.Mvc.dll" Name="FluentValidation.Mvc.dll" Source="$(var.Pulse.WebApi_TargetDir)FluentValidation.Mvc.dll" />
+      </Component>
+      <Component Id="System.Web.Helpers.dll" Guid="62c2f915-746e-4982-b73f-93c82f0ca14b">
+        <File Id="System.Web.Helpers.dll" Name="System.Web.Helpers.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.Helpers.dll" />
+      </Component>
+      <Component Id="System.Web.WebPages.Deployment.dll" Guid="fdce2512-c91f-4ac6-9e4e-90b184c52a79">
+        <File Id="System.Web.WebPages.Deployment.dll" Name="System.Web.WebPages.Deployment.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.WebPages.Deployment.dll" />
+      </Component>
+      <Component Id="System.Web.WebPages.dll" Guid="e2e28faa-80cf-40ca-b8a7-2ef818cac7d8">
+        <File Id="System.Web.WebPages.dll" Name="System.Web.WebPages.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.WebPages.dll" />
+      </Component>
+      <Component Id="System.Web.WebPages.Razor.dll" Guid="0edae558-b9b7-4670-9aaf-0dd5f91c3f31">
+        <File Id="System.Web.WebPages.Razor.dll" Name="System.Web.WebPages.Razor.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Web.WebPages.Razor.dll" />
+      </Component>
+      <Component Id="Castle.Core.dll" Guid="58a99a72-a16d-4c8f-9371-18a8f926beb9">
+        <File Id="Castle.Core.dll" Name="Castle.Core.dll" Source="$(var.Pulse.WebApi_TargetDir)Castle.Core.dll" />
+      </Component>
+      <Component Id="MongoDB.Bson.dll" Guid="48c73d76-18a9-43df-b48a-1022f30fca1f">
+        <File Id="MongoDB.Bson.dll" Name="MongoDB.Bson.dll" Source="$(var.Pulse.WebApi_TargetDir)MongoDB.Bson.dll" />
+      </Component>
+      <Component Id="MongoDB.Driver.dll" Guid="d6802939-13cb-4d4d-b869-b0e743bc831c">
+        <File Id="MongoDB.Driver.dll" Name="MongoDB.Driver.dll" Source="$(var.Pulse.WebApi_TargetDir)MongoDB.Driver.dll" />
+      </Component>
+      <Component Id="MongoDB.Driver.Core.dll" Guid="76f55604-b734-4c36-8cc7-7b1f3d134b85">
+        <File Id="MongoDB.Driver.Core.dll" Name="MongoDB.Driver.Core.dll" Source="$(var.Pulse.WebApi_TargetDir)MongoDB.Driver.Core.dll" />
+      </Component>
+      <Component Id="RazorEngine.dll" Guid="f8da4a31-610c-42c8-a068-bf127c6ad760">
+        <File Id="RazorEngine.dll" Name="RazorEngine.dll" Source="$(var.Pulse.WebApi_TargetDir)RazorEngine.dll" />
+      </Component>
+      <Component Id="System.Runtime.InteropServices.RuntimeInformation.dll" Guid="6e67ca57-f3de-4941-a1c1-7c47cfb435af">
+        <File Id="System.Runtime.InteropServices.RuntimeInformation.dll" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="$(var.Pulse.WebApi_TargetDir)System.Runtime.InteropServices.RuntimeInformation.dll" />
+      </Component>
+      <Component Id="Zlib.Portable.dll" Guid="bc2694fd-be02-4966-895f-5bd69cef1980">
+        <File Id="Zlib.Portable.dll" Name="Zlib.Portable.dll" Source="$(var.Pulse.WebApi_TargetDir)Zlib.Portable.dll" />
+      </Component>
+      <Component Id="Pulse.Mongo.dll" Guid="7d303308-d063-45f1-a2c6-98811a4e9dca">
+        <File Id="Pulse.Mongo.dll" Name="Pulse.Mongo.dll" Source="$(var.Pulse.WebApi_TargetDir)Pulse.Mongo.dll" />
+      </Component>
+      <Component Id="Guards.dll" Guid="141d3673-2846-4fa8-b980-2e50bbe96764">
+        <File Id="Guards.dll" Name="Guards.dll" Source="$(var.Pulse.WebApi_TargetDir)Guards.dll" />
+      </Component>
+      <Component Id="CrossPlatformLibrary.Platform.dll" Guid="8408661e-7db6-4874-bee5-df4e88d79ddc">
+        <File Id="CrossPlatformLibrary.Platform.dll" Name="CrossPlatformLibrary.Platform.dll" Source="$(var.Pulse.WebApi_TargetDir)CrossPlatformLibrary.Platform.dll" />
+      </Component>
+      <Component Id="PlatformAdapter.dll" Guid="c1a35f8d-d2e5-4752-87da-055efc52f8f4">
+        <File Id="PlatformAdapter.dll" Name="PlatformAdapter.dll" Source="$(var.Pulse.WebApi_TargetDir)PlatformAdapter.dll" />
+      </Component>
+      <Component Id="Microsoft.Practices.ServiceLocation.dll" Guid="b40e2508-7a1c-4fbe-80a3-c9ea6bf3d003">
+        <File Id="Microsoft.Practices.ServiceLocation.dll" Name="Microsoft.Practices.ServiceLocation.dll" Source="$(var.Pulse.WebApi_TargetDir)Microsoft.Practices.ServiceLocation.dll" />
+      </Component>
+      <Component Id="CrossPlatformLibrary.dll" Guid="7698942a-2631-478d-91a5-5b425f8dd147">
+        <File Id="CrossPlatformLibrary.dll" Name="CrossPlatformLibrary.dll" Source="$(var.Pulse.WebApi_TargetDir)CrossPlatformLibrary.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Log4net_files" Directory="Log4Net">
+      <Component Id="Log4net_files.config" Guid="865ef390-f26b-11e6-bc64-92361f002671">
+        <File Id="Log4net_files.config" Name="Log4net.config" Source="$(var.Pulse.WebApi_TargetDir)Log4net\Log4Net.config" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="EmailTemplate_files" Directory="EmailTemplate">
+      <Component Id="EmailTemplate_files.cshtml" Guid="8f486994-f26d-11e6-bc64-92361f002671">
+        <File Id="EmailTemplate_files.cshtml" Name="Template.cshtml" Source="$(var.Pulse.WebApi_TargetDir)EmailTemplate\Template.cshtml" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
